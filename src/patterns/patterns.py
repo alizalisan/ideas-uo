@@ -713,7 +713,7 @@ class Patterns(Fetcher):
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
 
-        #display(work_df.head(5))     #displays all the commits along with the filepath and the author
+        display(work_df.head(5))     #displays all the commits along with the filepath and the author
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -727,10 +727,11 @@ class Patterns(Fetcher):
         #*1
         d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
         d["dev_knowledge"] = 0
+        display(d.head(5))      #displays the sums of the value of locc_metric against each author on a certain file
         d.reset_index(level=d.index.names, inplace=True)
-        display(d.head(5))
         #*2
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
+        display(authors_commits_df.head(5))    #displays total commits by each author
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
         tot_developers = len(authors_commits_df.index)
         primary_X = 0
