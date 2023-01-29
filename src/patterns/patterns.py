@@ -728,7 +728,7 @@ class Patterns(Fetcher):
         d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
         d["dev_knowledge"] = 0
         d.reset_index(level=d.index.names, inplace=True)
-        display(work_df.head(5))
+        display(d.head(5))
         #*2
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
