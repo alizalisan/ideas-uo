@@ -729,14 +729,15 @@ class Patterns(Fetcher):
         directory_df = pd.DataFrame()
         if directory_path:
             directory_df = work_df[work_df['filepath'].str.contains(directory_path)]
-            # directory_df = work_df.loc[work_df["filepath"].to_string().find(directory_path) != -1]
-
-            display(directory_df.head(5))
-
-        #*1 sums the value of locc_metric against each author on a certain file
-        d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
-        d["dev_knowledge"] = 0
-        #display(d.head(5))
+            #display(directory_df.head(5))
+            #*1
+            d = pd.DataFrame(directory_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
+            d["dev_knowledge"] = 0
+        else:
+            #*1 sums the value of locc_metric against each author on a certain file
+            d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
+            d["dev_knowledge"] = 0
+        display(d.head(5))
         d.reset_index(level=d.index.names, inplace=True)
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
