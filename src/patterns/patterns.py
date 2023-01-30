@@ -696,11 +696,11 @@ class Patterns(Fetcher):
 
         return sorted_hot_directories, stats_df
 
-    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame()):
+    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path=""):
         """Calculates bus factor based on the four CST algorithm metrics based on the locc_metric provided by the user"""
         print("INFO: Creating developer matrix...")
 
-        directory_path = "src/mat/"
+        #directory_path = "src/mat/"
 
         # Create the files x developers matrix, using the value_column parameter as the values
         if 'unique_author' not in self.commit_data.columns:   #self.authors_data = df.merge(df2, how='inner', on='author')
@@ -727,14 +727,14 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         directory_df = pd.DataFrame()
-        if directory_path:
+        if len(directory_path):
             directory_df = work_df[work_df['filepath'].str.contains(directory_path)]
             #display(directory_df.head(5))
-            #*1
+            #*1 sums the value of locc_metric against each author on a certain file
             d = pd.DataFrame(directory_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         else:
-            #*1 sums the value of locc_metric against each author on a certain file
+            #*1
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         d.reset_index(level=d.index.names, inplace=True)
@@ -743,9 +743,9 @@ class Patterns(Fetcher):
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
-        display(authors_commits_df.head(5))
+        #display(authors_commits_df.head(5))
+
         tot_developers = len(authors_commits_df.index)
-        print(tot_developers)
         primary_X = 0
         secondary_X = 0
         if tot_developers != 0:
