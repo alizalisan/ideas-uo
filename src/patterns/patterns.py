@@ -728,16 +728,8 @@ class Patterns(Fetcher):
 
         directory_df = pd.DataFrame()
         if directory_path:
-            directory_df = work_df.loc[work_df["filepath"].to_string().find(directory_path) != -1]
-            # mask = work_df['filepath'].values.to_string().find(directory_path) != -1
-            # directory_df = work_df.loc[mask]
-
-            # for i, row in work_df.iterrows():
-            #     fp = work_df.loc[i, "filepath"]
-            #     if isinstance(fp, pd.Series):
-            #         fp = fp.to_string()
-            #     if fp.find(directory_path) != -1:
-            #         directory_df.append(row)
+            directory_df = work_df[work_df['filepath'].str.contains(directory_path)]
+            # directory_df = work_df.loc[work_df["filepath"].to_string().find(directory_path) != -1]
 
             display(directory_df.head(5))
 
