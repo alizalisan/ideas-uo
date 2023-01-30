@@ -742,9 +742,10 @@ class Patterns(Fetcher):
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
-        display(authors_commits_df.head(5))
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
+        display(authors_commits_df.head(5))
         tot_developers = len(authors_commits_df.index)
+        print(tot_developers)
         primary_X = 0
         secondary_X = 0
         if tot_developers != 0:
