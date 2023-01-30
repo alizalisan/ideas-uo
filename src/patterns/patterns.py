@@ -737,12 +737,12 @@ class Patterns(Fetcher):
             #*1 sums the value of locc_metric against each author on a certain file
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
-        display(d.head(5))
         d.reset_index(level=d.index.names, inplace=True)
+        display(d.head(5))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
-        #display(authors_commits_df.head(5))
+        display(authors_commits_df.head(5))
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
         tot_developers = len(authors_commits_df.index)
         primary_X = 0
