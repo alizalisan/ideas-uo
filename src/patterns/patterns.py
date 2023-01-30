@@ -726,13 +726,11 @@ class Patterns(Fetcher):
         primary_dev = sec_devs = 0
         tot_developers = 0
 
-        display(work_df.head(5))
-
         directory_df = pd.DataFrame()
         if directory_path:
             for i, row in work_df.iterrows():
                 fp = work_df.loc[i, "filepath"]
-                if fp.find(directory_path) != -1:
+                if fp.to_string().find(directory_path) != -1:
                     directory_df.append(row)
 
             display(directory_df.head(5))
