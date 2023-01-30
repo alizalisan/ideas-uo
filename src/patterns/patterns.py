@@ -730,7 +730,8 @@ class Patterns(Fetcher):
         if directory_path:
             for i, row in work_df.iterrows():
                 fp = work_df.loc[i, "filepath"]
-                print(type(fp))
+                if isinstance(fp, pd.Series):
+                    fp = fp.to_string()
                 if fp.find(directory_path) != -1:
                     directory_df.append(row)
 
