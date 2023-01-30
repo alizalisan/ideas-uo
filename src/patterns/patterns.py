@@ -727,9 +727,11 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         if directory_path:
-            mask = work_df['filepath'].values.find(directory_path) != -1
-            directory_df = pd.DataFrame(work_df[mask])
-            display(directory_df.head(5))
+            # mask = work_df['filepath'].values.find(directory_path) != -1
+            # directory_df = pd.DataFrame(work_df[mask])
+
+            work_df[(work_df.filepath.find(directory_path) != -1)]
+            display(work_df.head(5))
 
         #*1 sums the value of locc_metric against each author on a certain file
         d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
