@@ -700,7 +700,7 @@ class Patterns(Fetcher):
         """Calculates bus factor based on the four CST algorithm metrics based on the locc_metric provided by the user"""
         print("INFO: Creating developer matrix...")
 
-        directory_path = "config/"
+        directory_path = "src/mat"
 
         # Create the files x developers matrix, using the value_column parameter as the values
         if 'unique_author' not in self.commit_data.columns:   #self.authors_data = df.merge(df2, how='inner', on='author')
@@ -727,11 +727,12 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         if directory_path:
+            directory_df = pd.DataFrame(work_df.filepath)
             # mask = work_df['filepath'].values.find(directory_path) != -1
             # directory_df = pd.DataFrame(work_df[mask])
 
-            work_df[(str(work_df.filepath).find(directory_path) != -1)]
-            display(work_df.head(5))
+            # work_df[(str(work_df.filepath).find(directory_path) != -1)]
+            display(directory_df.head(5))
 
         #*1 sums the value of locc_metric against each author on a certain file
         d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
