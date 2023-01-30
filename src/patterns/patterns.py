@@ -727,7 +727,7 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         if directory_path:
-            mask = work_df['filepath'].find(directory_path) != -1
+            mask = work_df['filepath'].values.find(directory_path) != -1
             directory_df = pd.DataFrame(work_df[mask])
             display(directory_df.head(5))
 
