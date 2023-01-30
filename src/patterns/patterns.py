@@ -713,8 +713,6 @@ class Patterns(Fetcher):
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
 
-        #display(work_df.head(5))
-
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
                 include=['float64','int']).columns))
@@ -727,7 +725,6 @@ class Patterns(Fetcher):
         directory_df = pd.DataFrame()
         if len(directory_path):
             directory_df = work_df[work_df['filepath'].str.contains(directory_path)]
-            #display(directory_df.head(5))
             #*1 sums the value of locc_metric against each author on a certain file
             d = pd.DataFrame(directory_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
@@ -736,7 +733,6 @@ class Patterns(Fetcher):
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         d.reset_index(level=d.index.names, inplace=True)
-        #display(d.head(5))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
@@ -789,7 +785,12 @@ class Patterns(Fetcher):
 
         # assigns all knowledge of a file to the last developer that modified that file
         elif(metric == 'last-change-all'):
-            d = work_df[['filepath', 'unique_author']].copy()
+            #for specific directory given by user
+            if len(directory_path):
+                d = directory_df[['filepath', 'unique_author']].copy()
+            #for whole project
+            else:
+                d = work_df[['filepath', 'unique_author']].copy()
             d.sort_values(by=['filepath'], inplace=True)
             d.reset_index(level=d.index.names, inplace=True)
 
@@ -824,7 +825,10 @@ class Patterns(Fetcher):
             results = d
 
         else:
-            d = work_df[['filepath', 'unique_author', locc_metric]].copy()
+            if len(directory_path):
+                d = directory_df[['filepath', 'unique_author', locc_metric]].copy()
+            else:
+                d = work_df[['filepath', 'unique_author', locc_metric]].copy()
             d.sort_values(by=['filepath', 'datetime'], inplace=True)
             d.reset_index(level=d.index.names, inplace=True)
             #display(d.head(7))
