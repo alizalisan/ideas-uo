@@ -728,7 +728,7 @@ class Patterns(Fetcher):
 
         directory_df = pd.DataFrame()
         if directory_path:
-            directory_df = work_df.loc[work_df["filepath"].find(directory_path) != -1]
+            directory_df = work_df.loc[work_df["filepath"].to_string().find(directory_path) != -1]
             # mask = work_df['filepath'].values.to_string().find(directory_path) != -1
             # directory_df = work_df.loc[mask]
 
