@@ -809,7 +809,7 @@ class Patterns(Fetcher):
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
                     ind+=1
-                if datetime < d['datetime'][ind]:
+                elif datetime < d['datetime'][ind]:
                     path = d['filepath'][ind]
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
