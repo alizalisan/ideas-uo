@@ -726,6 +726,9 @@ class Patterns(Fetcher):
         directory_df = pd.DataFrame()
         if len(directory_path):
             directory_df = work_df[work_df['filepath'].str.contains(directory_path)]
+            if(not len(directory_df)):
+                err('The given directory does not exist')
+                return
             #*1 sums the value of locc_metric against each author on a certain file
             d = pd.DataFrame(directory_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
