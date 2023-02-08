@@ -698,6 +698,11 @@ class Patterns(Fetcher):
 
     def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path=""):
         """Calculates bus factor based on the four CST algorithm metrics based on the locc_metric provided by the user"""
+        
+        #checking if the provided directory is correct
+        if(len(directory_path)) and directory_path[len(directory_path) - 1] != "/":
+            err('The directory path provided is incorrect, it should end with a backslash ("/")')
+        
         print("INFO: Creating developer matrix...")
 
         # Create the files x developers matrix, using the value_column parameter as the values
