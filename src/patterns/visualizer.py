@@ -429,8 +429,10 @@ class Visualizer(Patterns):
         display(results.head(5))
 
         print("Total developers: ", tot_developers)
-        print("Primary Developers: ", prim_devs)
-        print("Secondary Developers: ", secon_devs)
+        if(len(prim_devs)):
+            print("Primary Developers: ", prim_devs)
+        if(len(secon_devs)):
+            print("Secondary Developers: ", secon_devs)
         print("Bus Factor: ", bus_factor)
 
     def get_unique_authors(self):
