@@ -705,6 +705,8 @@ class Patterns(Fetcher):
         if 'unique_author' not in self.commit_data.columns:   #self.authors_data = df.merge(df2, how='inner', on='author')
             self.set_unique_authors()
 
+        display(self.commit_data.head(5))
+
         if my_df.empty:
             work_df, stats = self.get_time_range_df(time_range, sum=False)
         else:
@@ -713,6 +715,7 @@ class Patterns(Fetcher):
                 err('The dataframe you provided to make_file_developer_df() does '
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
+        display(work_df.head(5))
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -737,11 +740,12 @@ class Patterns(Fetcher):
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         d.reset_index(level=d.index.names, inplace=True)
+        display(d.head(5))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
-        #display(authors_commits_df.head(5))
+        display(authors_commits_df.head(5))
 
         tot_developers = len(authors_commits_df.index)
         primary_X = 0
