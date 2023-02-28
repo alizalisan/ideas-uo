@@ -705,8 +705,6 @@ class Patterns(Fetcher):
         if 'unique_author' not in self.commit_data.columns:   #self.authors_data = df.merge(df2, how='inner', on='author')
             self.set_unique_authors()
 
-        display(self.commit_data.head(5))
-
         if my_df.empty:
             work_df, stats = self.get_time_range_df(time_range, sum=False)
         else:
