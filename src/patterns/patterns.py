@@ -770,7 +770,7 @@ class Patterns(Fetcher):
                 tot_commits = tot_commits_per_file[locc_metric][index]
                 d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
             
-            display(d.head(5))
+            #display(d.head(5))
 
                 # if(path == tot_commits_per_file['filepath'][it]):
                 #     tot_commits = tot_commits_per_file[locc_metric][it]
@@ -798,9 +798,9 @@ class Patterns(Fetcher):
             
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
-            #display(authors_commits_df.head(5))
-            #results = authors_commits_df
-            results = aggregated_df
+            display(authors_commits_df.head(5))
+            results = authors_commits_df
+            #results = aggregated_df
 
         # assigns all knowledge of a file to the last developer that modified that file
         elif(metric == 'last-change-all'):
