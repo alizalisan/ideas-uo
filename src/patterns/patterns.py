@@ -761,20 +761,16 @@ class Patterns(Fetcher):
             tot_commits_per_file.reset_index(level=tot_commits_per_file.index.names, inplace=True)
             #display(tot_commits_per_file.head(5))
 
-            it = 0              #iterator for tot_commits_per_file dataframe
+            #it = 0              #iterator for tot_commits_per_file dataframe
             for ind in d.index:
                 path = d['filepath'][ind]
                 author = d['unique_author'][ind]
                 d_commits = d[locc_metric][ind]
                 index = ((tot_commits_per_file[tot_commits_per_file['filepath']==path].index.values).tolist())[0]
                 tot_commits = tot_commits_per_file[locc_metric][index]
-                print('d_commits', d_commits)
-                print('tot_commits', tot_commits)
-                print('div', d_commits/tot_commits)
                 d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
-                it = it+1
-                if it==5:
-                    break
+            
+            display(d.head(5))
 
                 # if(path == tot_commits_per_file['filepath'][it]):
                 #     tot_commits = tot_commits_per_file[locc_metric][it]
@@ -784,7 +780,13 @@ class Patterns(Fetcher):
                 #     tot_commits = tot_commits_per_file[locc_metric][it]
                 #     d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
 
-            display(d.head(5))
+            tot_files = len(tot_commits_per_file.index) #scaling factor
+            #aggregating the knowledge on each file to project/directory level
+            temp_df = d.drop(columns=['filepath', locc_metric])
+            aggregated_df = pd.DataFrame(temp_df.groupby(['unique_author'])['dev_knowledge'].sum())
+            aggregated_df.reset_index(inplace=True)
+
+            display(aggregated_df.head(5))
 
             #copied *2
             authors_commits_df["dev_knowledge"] = 0
@@ -796,7 +798,8 @@ class Patterns(Fetcher):
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
             #display(authors_commits_df.head(5))
-            results = authors_commits_df
+            #results = authors_commits_df
+            results = aggregated_df
 
         # assigns all knowledge of a file to the last developer that modified that file
         elif(metric == 'last-change-all'):
