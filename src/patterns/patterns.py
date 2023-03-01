@@ -738,12 +738,12 @@ class Patterns(Fetcher):
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         d.reset_index(level=d.index.names, inplace=True)
-        display(d.head(5))
+        #display(d.head(5))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
         authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
-        display(authors_commits_df.head(5))
+        #display(authors_commits_df.head(5))
 
         tot_developers = len(authors_commits_df.index)
         primary_X = 0
@@ -759,16 +759,22 @@ class Patterns(Fetcher):
             #copied *1
             tot_commits_per_file = pd.DataFrame(d.groupby(['filepath'])[locc_metric].sum())
             tot_commits_per_file.reset_index(level=tot_commits_per_file.index.names, inplace=True)
-            display(tot_commits_per_file.head(5))
+            #display(tot_commits_per_file.head(5))
 
-            # it = 0              #iterator for tot_commits_per_file dataframe
+            it = 0              #iterator for tot_commits_per_file dataframe
             for ind in d.index:
                 path = d['filepath'][ind]
                 author = d['unique_author'][ind]
                 d_commits = d[locc_metric][ind]
                 index = ((tot_commits_per_file[tot_commits_per_file['filepath']==path].index.values).tolist())[0]
                 tot_commits = tot_commits_per_file[locc_metric][index]
+                print('d_commits', d_commits)
+                print('tot_commits', tot_commits)
+                print('div', d_commits/tot_commits)
                 d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
+                it = it+1
+                if it==5:
+                    break
 
                 # if(path == tot_commits_per_file['filepath'][it]):
                 #     tot_commits = tot_commits_per_file[locc_metric][it]
@@ -789,7 +795,7 @@ class Patterns(Fetcher):
             
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
-            display(authors_commits_df.head(5))
+            #display(authors_commits_df.head(5))
             results = authors_commits_df
 
         # assigns all knowledge of a file to the last developer that modified that file
