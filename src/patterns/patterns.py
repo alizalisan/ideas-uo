@@ -737,12 +737,12 @@ class Patterns(Fetcher):
             #*1
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
-        d.reset_index(level=d.index.names, inplace=True)
+        d.reset_index(inplace=True)
         #display(d.head(5))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
-        authors_commits_df.reset_index(level=authors_commits_df.index.names, inplace=True)
+        authors_commits_df.reset_index(inplace=True)
         #display(authors_commits_df.head(5))
 
         tot_developers = len(authors_commits_df.index)
@@ -758,7 +758,7 @@ class Patterns(Fetcher):
         if(metric == 'mul-changes-equal'):
             #copied *1
             tot_commits_per_file = pd.DataFrame(d.groupby(['filepath'])[locc_metric].sum())
-            tot_commits_per_file.reset_index(level=tot_commits_per_file.index.names, inplace=True)
+            tot_commits_per_file.reset_index(inplace=True)
             #display(tot_commits_per_file.head(5))
 
             #it = 0              #iterator for tot_commits_per_file dataframe
