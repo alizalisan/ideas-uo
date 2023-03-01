@@ -785,6 +785,7 @@ class Patterns(Fetcher):
             temp_df = d.drop(columns=['filepath', locc_metric])
             aggregated_df = pd.DataFrame(temp_df.groupby(['unique_author'])['dev_knowledge'].sum())
             aggregated_df.reset_index(inplace=True)
+            aggregated_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
 
             display(aggregated_df.head(5))
 
