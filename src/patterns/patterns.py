@@ -784,7 +784,7 @@ class Patterns(Fetcher):
             #aggregating the knowledge on each file to project/directory level
             temp_df = d.drop(columns=['filepath', locc_metric])
             aggregated_df = pd.DataFrame(temp_df.groupby(['unique_author'])['dev_knowledge'].sum())
-            aggregated_df['dev_knowledge'] = aggregated_df['dev_knowledge']/tot_files
+            #aggregated_df['dev_knowledge'] = aggregated_df['dev_knowledge']/tot_files
             aggregated_df.reset_index(inplace=True)
             aggregated_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
 
