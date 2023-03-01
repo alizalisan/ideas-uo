@@ -713,7 +713,7 @@ class Patterns(Fetcher):
                 err('The dataframe you provided to make_file_developer_df() does '
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
-        display(work_df.head(5))
+        # display(work_df.head(5))
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -761,29 +761,31 @@ class Patterns(Fetcher):
             tot_commits_per_file.reset_index(level=tot_commits_per_file.index.names, inplace=True)
             display(tot_commits_per_file.head(5))
 
-            it = 0              #iterator for tot_commits_per_file dataframe
+            # it = 0              #iterator for tot_commits_per_file dataframe
             for ind in d.index:
                 path = d['filepath'][ind]
                 author = d['unique_author'][ind]
                 d_commits = d[locc_metric][ind]
-                if(path == tot_commits_per_file['filepath'][it]):
-                    tot_commits = tot_commits_per_file[locc_metric][it]
-                    d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
-                else:
-                    it = it+1
-                    tot_commits = tot_commits_per_file[locc_metric][it]
-                    d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
+                index = ((tot_commits_per_file[tot_commits_per_file['filepath']==path].index.values).tolist())[0]
+                tot_commits = tot_commits_per_file[locc_metric][index]
+                d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
+
+                # if(path == tot_commits_per_file['filepath'][it]):
+                #     tot_commits = tot_commits_per_file[locc_metric][it]
+                #     d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
+                # else:
+                #     it = it+1
+                #     tot_commits = tot_commits_per_file[locc_metric][it]
+                #     d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
 
             display(d.head(5))
-            display(tot_commits_per_file.head(5))
 
             #copied *2
-
             authors_commits_df["dev_knowledge"] = 0
-            tot_commits = authors_commits_df[locc_metric].sum()
+            tot_commits = authors_commits_df[locc_metric].sum() #total number of commits on the project/directory
             for ind in authors_commits_df.index:
                 d_commits = authors_commits_df[locc_metric][ind]
-                authors_commits_df.iat[ind, authors_commits_df.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
+                authors_commits_df.iat[ind, authors_commits_df.columns.get_loc('dev_knowledge')] = d_commits/tot_commits #calculating dev_knowledge on the whole project/directory
             
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
