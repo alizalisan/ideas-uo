@@ -834,7 +834,7 @@ class Patterns(Fetcher):
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
 
-            #display(dev_knowledge_df.head(5))
+            display(dev_knowledge_df.head(5))
 
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
             d["dev_knowledge"] = d["dev_knowledge"].apply(lambda a: a / 1000)
