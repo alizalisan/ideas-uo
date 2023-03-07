@@ -834,14 +834,15 @@ class Patterns(Fetcher):
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
 
-            display(dev_knowledge_df.head(20))
+            #display(dev_knowledge_df.head(5))
 
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
+            display(d.head(5))
             d["dev_knowledge"] = d["dev_knowledge"].apply(lambda a: a / 1000)
             d.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             d.reset_index(level=d.index.names, inplace=True)
 
-            #display(d.head(5))
+            display(d.head(5))
             results = d
 
         else:
