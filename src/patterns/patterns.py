@@ -850,7 +850,7 @@ class Patterns(Fetcher):
             else:
                 d = work_df[['filepath', 'unique_author', locc_metric]].copy()
             d.sort_values(by=['filepath', 'datetime'], inplace=True)
-            d.reset_index(level=d.index.names, inplace=True)
+            d.reset_index(inplace=True)
             #display(d.head(7))
 
             # assesses the developer’s knowledge according to the number of non-consecutive changes on the file
@@ -888,12 +888,12 @@ class Patterns(Fetcher):
             #total commits of each author on each filepath
             df = pd.DataFrame(d.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             df["dev_knowledge"] = 0
-            df.reset_index(level=df.index.names, inplace=True)
+            df.reset_index(inplace=True)
             #display(df.head(5))
 
             #total commits on the file by all authors collectively
             tot_commits_per_file = pd.DataFrame(df.groupby(['filepath'])[locc_metric].sum())
-            tot_commits_per_file.reset_index(level=tot_commits_per_file.index.names, inplace=True)
+            tot_commits_per_file.reset_index(inplace=True)
             tot_commits_per_file.set_index('filepath', inplace=True)
             #display(tot_commits_per_file.head(5))
 
@@ -909,7 +909,7 @@ class Patterns(Fetcher):
 
             #knowledge of each developer on the whole project
             project_knowledge = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
-            project_knowledge.reset_index(level=project_knowledge.index.names, inplace=True)
+            project_knowledge.reset_index(inplace=True)
             project_knowledge["dev_knowledge"] = 0
             tot_commits = project_knowledge[locc_metric].sum()
 
