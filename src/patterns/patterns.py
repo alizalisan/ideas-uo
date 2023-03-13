@@ -842,7 +842,7 @@ class Patterns(Fetcher):
             d.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             d.reset_index(inplace=True)
 
-            display(d.head(5))
+            # display(d.head(5))
             results = d
 
         else:
