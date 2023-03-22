@@ -160,6 +160,9 @@ class Patterns(Fetcher):
     # These are global, and generally applicable, unless a project-specific list is provided
     excluded_subpaths = ["contrib/", "extern/", "external/"]
 
+    # These are global, and generally applicable, unless a project-specific name is provided
+    default_branches = ["/main", "/master", "/develop"]
+
     @staticmethod
     def is_code(path_str):
         if "." in path_str:
@@ -724,11 +727,25 @@ class Patterns(Fetcher):
         primary_dev = sec_devs = 0
         tot_developers = 0
 
-        if len(branch) != 0:
+        if len(branch) != 0 and branch[len(branch) - 1] != "\\":
             branch = branch + '\\'
-            print(branch)
-        print(work_df.iloc[:10, :3])
-        display(work_df.tail(5))
+        if len(branch) != 0 and branch[0] != "/":
+            branch = branch + '/'
+        if len(branch) == 0:
+            for b in Patterns.default_branches:
+                if len(work_df[work_df['branch'].str.contains(b + "\\")]) != 0:
+                    branch = b + '\\'
+                    break
+
+        print(branch)
+        work_df = work_df[work_df['branch'].str.contains(branch)]
+        display(work_df.head(5))
+
+        if(not len(work_df)):
+            err('The given branch does not exist')
+            return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
+
+        return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
 
         directory_df = pd.DataFrame()
         if len(directory_path):
