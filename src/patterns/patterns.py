@@ -725,10 +725,10 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         if len(branch) != 0:
-            print(branch)
             branch = branch + '\\'
             print(branch)
         print(work_df.iloc[:10, :3])
+        display(work_df.tail(5))
 
         directory_df = pd.DataFrame()
         if len(directory_path):
