@@ -696,7 +696,7 @@ class Patterns(Fetcher):
 
         return sorted_hot_directories, stats_df
 
-    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path=""):
+    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path="", branch=""):
         """Calculates bus factor based on the four CST algorithm metrics based on the locc_metric provided by the user"""
         
         print("INFO: Creating developer matrix...")
@@ -714,7 +714,6 @@ class Patterns(Fetcher):
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
         # display(work_df.head(5))
-        print(work_df.iloc[:10, 2:3] )
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -724,6 +723,11 @@ class Patterns(Fetcher):
         secon_devs = []
         primary_dev = sec_devs = 0
         tot_developers = 0
+
+        if len(branch) != 0:
+            branch = branch + '\\'
+            print(branch)
+        print(work_df.iloc[:10, :3])
 
         directory_df = pd.DataFrame()
         if len(directory_path):
