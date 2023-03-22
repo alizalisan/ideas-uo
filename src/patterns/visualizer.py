@@ -424,7 +424,7 @@ class Visualizer(Patterns):
             err('The directory path provided is incorrect, it should end with a forward slash ("/")')
             return
 
-        tot_developers, prim_devs, secon_devs, bus_factor, results = self.get_busfactor_data(locc_metric=locc_metric, metric=metric, time_range=time_range, my_df=my_df, directory_path=directory_path)
+        tot_developers, prim_devs, secon_devs, bus_factor, results = self.get_busfactor_data(locc_metric=locc_metric, metric=metric, time_range=time_range, my_df=my_df, directory_path=directory_path, branch=branch)
 
         if(len(results)):
             display(results.head(5))
