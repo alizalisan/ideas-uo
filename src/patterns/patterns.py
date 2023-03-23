@@ -739,8 +739,8 @@ class Patterns(Fetcher):
                 if branches[i][0] != "/":
                     branches[i] = "/" + branches[i]
         for i in range(len(branches)):
-            branch_df = pd.concat([branch_df, (work_df[work_df['branch'].str.contains(branches[i])]
-                                               & work_df[work_df['branch'].str.contains("master")])], axis=0)
+            branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i]) 
+                                                      & work_df['branch'].str.contains("master")]], axis=0)
             work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
         work_df = branch_df
