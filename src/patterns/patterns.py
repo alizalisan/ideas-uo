@@ -736,7 +736,8 @@ class Patterns(Fetcher):
                     break
         elif len(branches) != 0:
             for i in len(branches):
-                if branches[i][0] != "/":
+                temp_str = branches[i]
+                if temp_str[0] != "/":
                     branches[i] = "/" + branches[i]
         for i in range(len(branches)):
             branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
