@@ -729,12 +729,12 @@ class Patterns(Fetcher):
 
         if len(branch) != 0 and branch[0] != "/":
             branch = "/" + branch
-        if len(branch) != 0 and branch[len(branch) - 1] != r'\\':
-            branch = branch + r'\\'
+        if len(branch) != 0 and branch[len(branch) - 1] != "\\":
+            branch = branch + "\\"
         if len(branch) == 0:
             for b in Patterns.default_branches:
-                if len(work_df[work_df['branch'].str.contains(b + r'\\')]) != 0:
-                    branch = b + r'\\'
+                if len(work_df[work_df['branch'].str.contains(b + "\\")]) != 0:
+                    branch = b + "\\"
                     break
 
         print(branch)
