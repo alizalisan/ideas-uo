@@ -717,7 +717,6 @@ class Patterns(Fetcher):
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
         # display(work_df.head(5))
-        print(len(work_df))
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -744,16 +743,14 @@ class Patterns(Fetcher):
             work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
         work_df = branch_df
-        print(branches)
-        print(len(work_df))
-        display(work_df.head(5))
-        display(work_df.tail(5))
+        # print(branches)
+        # print(len(work_df))
+        # display(work_df.head(5))
+        # display(work_df.tail(5))
 
         if(not len(work_df)):
             err('The given branch(es) do(es) not exist')
             return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
-        
-        return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
 
         directory_df = pd.DataFrame()
         if len(directory_path):
