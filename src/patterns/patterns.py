@@ -737,7 +737,7 @@ class Patterns(Fetcher):
         #             branch = b + "\\"
         #             break
 
-        # print(branch)
+        print(branch)
         # work_df = work_df[work_df['branch'].str.contains(branch)]
         # display(work_df.head(5))
 
