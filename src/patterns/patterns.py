@@ -745,6 +745,10 @@ class Patterns(Fetcher):
             #branch_df = branch_df & work_df[work_df['branch'].str.contains(branches[i])]
         # work_df = work_df[work_df['branch'].str.contains(b)]
         work_df = branch_df
+        print(branches)
+        print(len(work_df))
+        print(work_df.head(5))
+        print(work_df.tail(5))
 
         if(not len(work_df)):
             err('The given branch(es) do(es) not exist')
