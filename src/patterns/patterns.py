@@ -738,8 +738,8 @@ class Patterns(Fetcher):
                     break
 
         print(branch)
-        # work_df = work_df[work_df['branch'].str.contains(branch)]
-        # display(work_df.head(5))
+        work_df = work_df[work_df['branch'].str.contains(branch)]
+        display(work_df.head(5))
 
         # if(not len(work_df)):
         #     err('The given branch does not exist')
