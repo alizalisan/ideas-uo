@@ -740,7 +740,8 @@ class Patterns(Fetcher):
                     branches[i] = "/" + branches[i]
         for i in range(len(branches)):
             branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
-            work_df.drop(work_df[work_df['branch'].str.contains(branches[i])].index, inplace = True)
+            #work_df.drop(work_df[work_df['branch'].str.contains(branches[i])].index, inplace = True)
+            work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
             #branch_df = branch_df & work_df[work_df['branch'].str.contains(branches[i])]
         # work_df = work_df[work_df['branch'].str.contains(b)]
