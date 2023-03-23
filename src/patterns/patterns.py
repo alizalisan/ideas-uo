@@ -699,7 +699,7 @@ class Patterns(Fetcher):
 
         return sorted_hot_directories, stats_df
 
-    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path="", branch=""):
+    def get_busfactor_data(self, locc_metric='change-size-cos', metric='mul-changes-equal', time_range=None, my_df=pd.DataFrame(), directory_path="", branches=[]):
         """Calculates bus factor based on the four CST algorithm metrics based on the locc_metric provided by the user"""
         
         print("INFO: Creating developer matrix...")
@@ -727,24 +727,29 @@ class Patterns(Fetcher):
         primary_dev = sec_devs = 0
         tot_developers = 0
 
-        if len(branch) == 0:
+        # picks commits from the branch(es) provided by user, else picks commits from default branch only
+        branch_df = pd.DataFrame()
+        if len(branches) == 0:
             for b in Patterns.default_branches:
                 if len(work_df[work_df['branch'].str.contains(b)]) != 0:
-                    branch = b
+                    branches.append(b)
                     break
-        elif len(branch) != 0 and branch[0] != "/":
-            branch = "/" + branch
-        work_df = work_df[work_df['branch'].str.contains(branch)]
-
-        print(branch)
-        print(len(work_df))
-        display(work_df.head(5))
-        display(work_df.tail(5))
+        elif len(branches) != 0:
+            for i in len(branches):
+                if branches[i][0] != "/":
+                    branches[i] = "/" + branches[i]
+        for i in range(len(branches)):
+            branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
+            work_df.drop(work_df[work_df['branch'].str.contains(branches[i])].index, inplace = True)
+        
+            #branch_df = branch_df & work_df[work_df['branch'].str.contains(branches[i])]
+        # work_df = work_df[work_df['branch'].str.contains(b)]
+        work_df = branch_df
 
         if(not len(work_df)):
-            err('The given branch does not exist')
+            err('The given branch(es) do(es) not exist')
             return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
-
+        
         return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
 
         directory_df = pd.DataFrame()
