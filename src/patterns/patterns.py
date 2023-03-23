@@ -737,7 +737,7 @@ class Patterns(Fetcher):
             print("branch_len == 0")
             for b in Patterns.default_branches:
                 print(b)
-                branch_df = work_df[work_df['branch'].str.contains(b + "/")]
+                branch_df = work_df[work_df['branch'].str.contains(b + r"\\")]
                 if len(branch_df) != 0:
                     print("branch_df_len != 0")
                     branch = b
