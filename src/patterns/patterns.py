@@ -727,30 +727,30 @@ class Patterns(Fetcher):
         primary_dev = sec_devs = 0
         tot_developers = 0
 
-        # picks commits from the branch(es) provided by user, else picks commits from default branch only
-        branch_df = pd.DataFrame()
-        if len(branches) == 0:
-            for b in Patterns.default_branches:
-                if len(work_df[work_df['branch'].str.contains(b)]) != 0:
-                    branches.append(b)
-                    break
-        elif len(branches) != 0:
-            for i in range(len(branches)):
-                if branches[i][0] != "/":
-                    branches[i] = "/" + branches[i]
-        for i in range(len(branches)):
-            branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
-            work_df = work_df[~work_df.branch.str.contains(branches[i])]
+        # # picks commits from the branch(es) provided by user, else picks commits from default branch only
+        # branch_df = pd.DataFrame()
+        # if len(branches) == 0:
+        #     for b in Patterns.default_branches:
+        #         if len(work_df[work_df['branch'].str.contains(b)]) != 0:
+        #             branches.append(b)
+        #             break
+        # elif len(branches) != 0:
+        #     for i in range(len(branches)):
+        #         if branches[i][0] != "/":
+        #             branches[i] = "/" + branches[i]
+        # for i in range(len(branches)):
+        #     branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
+        #     work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
-        work_df = branch_df
-        # print(branches)
-        # print(len(work_df))
-        # display(work_df.head(5))
-        # display(work_df.tail(5))
+        # work_df = branch_df
+        # # print(branches)
+        # # print(len(work_df))
+        # # display(work_df.head(5))
+        # # display(work_df.tail(5))
 
-        if(not len(work_df)):
-            err('The given branch(es) do(es) not exist')
-            return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
+        # if(not len(work_df)):
+        #     err('The given branch(es) do(es) not exist')
+        #     return 0, pd.DataFrame(), pd.DataFrame(), 0, pd.DataFrame()
 
         directory_df = pd.DataFrame()
         if len(directory_path):
