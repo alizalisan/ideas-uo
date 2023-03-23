@@ -740,6 +740,7 @@ class Patterns(Fetcher):
         print(branch)
         work_df = work_df[work_df['branch'].str.contains(branch  + r"\\")]
         display(work_df.head(5))
+        display(work_df.tail(5))
 
         if(not len(work_df)):
             err('The given branch does not exist')
