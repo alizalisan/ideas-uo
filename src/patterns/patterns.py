@@ -728,21 +728,19 @@ class Patterns(Fetcher):
         tot_developers = 0
 
         branch_df = pd.DataFrame()
-        if len(branch) != 0 and branch[0] != "/":
-            branch = "/" + branch
-        if len(branch) != 0 and branch[len(branch) - 1] == "\\":
-            branch = branch[:-1]
-        #branch_df = work_df[work_df['branch'].str.contains(branch + r"\\")]
         if len(branch) == 0:
             print("branch_len == 0")
             for b in Patterns.default_branches:
                 print(b)
-                branch_df = work_df[work_df['branch'].str.contains("origin" + b)]
-                if len(branch_df) != 0:
+                # branch_df = work_df[work_df['branch'].str.contains(b)]
+                if len(work_df[work_df['branch'].str.contains(b)]) != 0:
                     print("branch_df_len != 0")
                     branch = b
                     print(b)
                     break
+        elif len(branch) != 0 and branch[0] != "/":
+            branch = "/" + branch
+        branch_df = work_df[work_df['branch'].str.contains(branch)]
 
         print(branch)
         display(branch_df.head(5))
