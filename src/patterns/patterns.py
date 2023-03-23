@@ -736,7 +736,7 @@ class Patterns(Fetcher):
         if len(branch) == 0:
             for b in Patterns.default_branches:
                 branch_df = work_df[work_df['branch'].str.contains(b  + r"\\")]
-                if len(work_df) != 0:
+                if len(branch_df) != 0:
                     branch = b
                     break
 
