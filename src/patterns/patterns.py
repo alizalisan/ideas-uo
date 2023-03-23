@@ -731,11 +731,11 @@ class Patterns(Fetcher):
             branch = "/" + branch
         if len(branch) != 0 and branch[len(branch) - 1] != "\\":
             branch = branch + "\\"
-        # if len(branch) == 0:
-        #     for b in Patterns.default_branches:
-        #         if len(work_df[work_df['branch'].str.contains(b + "\\")]) != 0:
-        #             branch = b + "\\"
-        #             break
+        elif len(branch) == 0:
+            for b in Patterns.default_branches:
+                if len(work_df[work_df['branch'].str.contains(b + "\\")]) != 0:
+                    branch = b + "\\"
+                    break
 
         print(branch)
         # work_df = work_df[work_df['branch'].str.contains(branch)]
