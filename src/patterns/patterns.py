@@ -727,7 +727,7 @@ class Patterns(Fetcher):
         primary_dev = sec_devs = 0
         tot_developers = 0
 
-        branch_df = pd.DataFrame()
+        #branch_df = pd.DataFrame()
         if len(branch) == 0:
             print("branch_len == 0")
             for b in Patterns.default_branches:
@@ -740,11 +740,11 @@ class Patterns(Fetcher):
                     break
         elif len(branch) != 0 and branch[0] != "/":
             branch = "/" + branch
-        branch_df = work_df[work_df['branch'].str.contains(branch)]
+        work_df = work_df[work_df['branch'].str.contains(branch)]
 
         print(branch)
-        display(branch_df.head(5))
-        display(branch_df.tail(5))
+        display(work_df.head(5))
+        display(work_df.tail(5))
 
         if(not len(branch_df)):
             err('The given branch does not exist')
