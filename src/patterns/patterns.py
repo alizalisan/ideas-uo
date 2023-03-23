@@ -734,16 +734,15 @@ class Patterns(Fetcher):
                 if len(work_df[work_df['branch'].str.contains(b)]) != 0:
                     branches.append(b)
                     break
-        # elif len(branches) != 0:
-        #     for i in range(len(branches)):
-        #         if branches[i][0] != "/":
-        #             branches[i] = "/" + branches[i]
+        elif len(branches) != 0:
+            for i in range(len(branches)):
+                if branches[i][0] != "/":
+                    branches[i] = "/" + branches[i]
         for i in range(len(branches)):
-            branch_df = pd.concat([branch_df, work_df[work_df['branch'].str.contains(branches[i])]], axis=0)
+            branch_df = pd.concat([branch_df, (work_df[work_df['branch'].str.contains(branches[i])]
+                                               & work_df[work_df['branch'].str.contains("master")])], axis=0)
             work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
-            #branch_df = branch_df & work_df[work_df['branch'].str.contains(branches[i])]
-        # work_df = work_df[work_df['branch'].str.contains(b)]
         work_df = branch_df
         print(branches)
         print(len(work_df))
