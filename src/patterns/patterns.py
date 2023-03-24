@@ -862,7 +862,7 @@ class Patterns(Fetcher):
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
 
-            #display(dev_knowledge_df.head(5))
+            display(dev_knowledge_df.head(5))
 
             norm_factor = len(d) # no. of files in the directory, branch or project
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
