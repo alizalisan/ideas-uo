@@ -828,8 +828,8 @@ class Patterns(Fetcher):
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
             #display(authors_commits_df.head(5))
-            results = authors_commits_df
-            #results = aggregated_df
+            #results = authors_commits_df
+            results = aggregated_df
 
         # assigns all knowledge of a file to the last developer that modified that file
         elif(metric == 'last-change-all'):
@@ -864,9 +864,8 @@ class Patterns(Fetcher):
 
             #display(dev_knowledge_df.head(5))
 
-            #norm_factor = len(d)
+            norm_factor = len(d) # no. of files in the directory, branch or project
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
-            norm_factor = d['dev_knowledge'].sum()
             d["dev_knowledge"] = d["dev_knowledge"].apply(lambda a: a / norm_factor)
             d.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             d.reset_index(inplace=True)
