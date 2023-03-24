@@ -864,7 +864,7 @@ class Patterns(Fetcher):
 
             #display(dev_knowledge_df.head(5))
 
-            norm_factor = d['filepath'].sum()
+            norm_factor = len(d)
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
             #norm_factor = d['dev_knowledge'].sum()
             d["dev_knowledge"] = d["dev_knowledge"].apply(lambda a: a / norm_factor)
