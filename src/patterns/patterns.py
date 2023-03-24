@@ -862,9 +862,9 @@ class Patterns(Fetcher):
                     datetime = d['datetime'][ind]
                     author = d['unique_author'][ind]
 
-            display(dev_knowledge_df.head(5))
+            #display(dev_knowledge_df.head(5))
 
-            norm_factor = len(d) # no. of files in the directory, branch or project
+            norm_factor = len(dev_knowledge_df) # no. of files in the directory, branch or project
             d = pd.DataFrame(dev_knowledge_df.groupby(['unique_author'])['dev_knowledge'].sum())
             d["dev_knowledge"] = d["dev_knowledge"].apply(lambda a: a / norm_factor)
             d.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
