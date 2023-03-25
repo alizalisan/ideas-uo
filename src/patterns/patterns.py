@@ -924,7 +924,6 @@ class Patterns(Fetcher):
             tot_commits_per_file = pd.DataFrame(df.groupby(['filepath'])[locc_metric].sum())
             tot_commits_per_file.reset_index(inplace=True)
             tot_commits_per_file.set_index('filepath', inplace=True)
-            norm_factor = len(tot_commits_per_file)
             #display(tot_commits_per_file.head(5))
 
             #calculating developer knowledge of each developer for each file
@@ -948,7 +947,6 @@ class Patterns(Fetcher):
                 project_knowledge.iat[ind, project_knowledge.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
             
             project_knowledge.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
-            project_knowledge["dev_knowledge"] = project_knowledge["dev_knowledge"].apply(lambda a: a / norm_factor)
             del project_knowledge[locc_metric]
             #display(project_knowledge.head(5))
             results = project_knowledge
