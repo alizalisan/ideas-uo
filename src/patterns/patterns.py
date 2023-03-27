@@ -743,7 +743,7 @@ class Patterns(Fetcher):
             work_df = work_df[~work_df.branch.str.contains(branches[i])]
         
         work_df = branch_df
-        print(branches)
+        # print(branches)
         # print(len(work_df))
         # display(work_df.head(5))
         # display(work_df.tail(5))
