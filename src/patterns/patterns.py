@@ -828,8 +828,8 @@ class Patterns(Fetcher):
             authors_commits_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
             
             #display(authors_commits_df.head(5))
-            #results = authors_commits_df
-            results = aggregated_df
+            results = authors_commits_df
+            # results = aggregated_df
 
         # assigns all knowledge of a file to the last developer that modified that file
         elif(metric == 'last-change-all'):
