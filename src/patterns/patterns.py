@@ -798,7 +798,7 @@ class Patterns(Fetcher):
                 tot_commits = tot_commits_per_file[locc_metric][index]
                 d.iat[ind, d.columns.get_loc('dev_knowledge')] = d_commits/tot_commits
             
-            #display(d.head(5))
+            display(d.head(10))
 
                 # if(path == tot_commits_per_file['filepath'][it]):
                 #     tot_commits = tot_commits_per_file[locc_metric][it]
