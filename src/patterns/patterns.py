@@ -745,7 +745,7 @@ class Patterns(Fetcher):
         work_df = branch_df
         # print(branches)
         # print(len(work_df))
-        display(work_df.head(10))
+        # display(work_df.head(5))
         # display(work_df.tail(5))
 
         if(not len(work_df)):
@@ -816,7 +816,7 @@ class Patterns(Fetcher):
             aggregated_df.reset_index(inplace=True)
             aggregated_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
 
-            display(aggregated_df.head(5))
+            # display(aggregated_df.head(5))
 
             #copied *2
             #Extra code starts (not aggregating BF from file to directory level)
