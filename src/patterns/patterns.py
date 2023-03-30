@@ -716,7 +716,7 @@ class Patterns(Fetcher):
                 err('The dataframe you provided to make_file_developer_df() does '
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
-        # display(work_df.head(5))
+        display(work_df.head(5))
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -819,6 +819,7 @@ class Patterns(Fetcher):
             # display(aggregated_df.head(5))
 
             #copied *2
+            #Extra code starts (not aggregating BF from file to directory level)
             authors_commits_df["dev_knowledge"] = 0
             tot_commits = authors_commits_df[locc_metric].sum() #total number of commits on the project/directory
             for ind in authors_commits_df.index:
@@ -829,6 +830,7 @@ class Patterns(Fetcher):
             
             #display(authors_commits_df.head(5))
             # results = authors_commits_df
+            #Extra code ends
             results = aggregated_df
 
         # assigns all knowledge of a file to the last developer that modified that file
