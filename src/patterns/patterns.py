@@ -717,7 +717,6 @@ class Patterns(Fetcher):
                     'not contain the required "%s" column"' % locc_metric)
             work_df = my_df
         #display(work_df.head(5))
-        display(work_df)
 
         if locc_metric not in work_df.select_dtypes(include=['float64', 'int']):
             err('get_busfactor_data column parameter must be one of %s' % ','.join(work_df.select_dtypes(
@@ -746,7 +745,7 @@ class Patterns(Fetcher):
         work_df = branch_df
         # print(branches)
         # print(len(work_df))
-        # display(work_df.head(5))
+        display(work_df.head(10))
         # display(work_df.tail(5))
 
         if(not len(work_df)):
@@ -767,12 +766,12 @@ class Patterns(Fetcher):
             d = pd.DataFrame(work_df.groupby(['filepath', 'unique_author'])[locc_metric].sum())
             d["dev_knowledge"] = 0
         d.reset_index(inplace=True)
-        #display(d.head(5))
+        display(d.head(10))
 
         #*2 sums total commits by each author regardless of the files
         authors_commits_df = pd.DataFrame(d.groupby(['unique_author'])[locc_metric].sum())
         authors_commits_df.reset_index(inplace=True)
-        #display(authors_commits_df.head(5))
+        display(authors_commits_df.head(10))
 
         tot_developers = len(authors_commits_df.index)
         primary_X = 0
@@ -788,7 +787,7 @@ class Patterns(Fetcher):
             #copied *1
             tot_commits_per_file = pd.DataFrame(d.groupby(['filepath'])[locc_metric].sum())
             tot_commits_per_file.reset_index(inplace=True)
-            #display(tot_commits_per_file.head(5))
+            display(tot_commits_per_file.head(5))
 
             #it = 0              #iterator for tot_commits_per_file dataframe
             for ind in d.index:
@@ -817,7 +816,7 @@ class Patterns(Fetcher):
             aggregated_df.reset_index(inplace=True)
             aggregated_df.sort_values(by=['dev_knowledge'], ascending=False, inplace=True)
 
-            # display(aggregated_df.head(5))
+            display(aggregated_df.head(5))
 
             #copied *2
             #Extra code starts (not aggregating BF from file to directory level)
